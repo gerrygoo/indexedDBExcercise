@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Hero } from './Hero';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { DexieServiceService } from './dexie-service.service';
 import { MessageService } from './message.service';
+import { City } from './City';
 import Dexie from 'dexie';
 
 @Injectable({
@@ -11,14 +12,17 @@ import Dexie from 'dexie';
 export class HeroService {
 
   heroesTable: Dexie.Table<Hero, Number>;
+  citiesTable: Dexie.Table<City, Number>;
 
   constructor(
     private messageService: MessageService,
     private dexieService: DexieServiceService
   ) {
     this.heroesTable = this.dexieService.table('heroes');
+    this.citiesTable = this.dexieService.table('cities');
   }
 
+  // #region heroes
   hookToHeroesCreation( listener: (primKey, obj, transaction) => any ): void {
     this.heroesTable.hook('creating', listener );
   }
@@ -57,5 +61,28 @@ export class HeroService {
     return from( this.heroesTable.delete(id) );
   }
 
+  searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return from( this.heroesTable.where('name').startsWithAnyOfIgnoreCase(term).toArray() );
+  }
+
+  // #endregion heroes
+
+  getCities(): Observable<any> {
+    this.messageService.add(`HeroService: getCities`);
+    return from( this.citiesTable.toArray() );
+  }
+
+  addCity(city: City) {
+    this.messageService.add(`HeroService: addCity`);
+    return from( this.citiesTable.add(city) );
+  }
+
+  hookToCitiesCreation( listener: (primKey, obj, transaction) => any ): void {
+    this.citiesTable.hook('creating', listener );
+  }
 
 }

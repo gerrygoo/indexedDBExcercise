@@ -9,6 +9,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddHeroComponent } from './add-hero/add-hero.component';
+import { CitiesComponent } from './cities/cities.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AddHeroComponent } from './add-hero/add-hero.component';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    AddHeroComponent
+    AddHeroComponent,
+    CitiesComponent
   ],
   imports: [
     BrowserModule,

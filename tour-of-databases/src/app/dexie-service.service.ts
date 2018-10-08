@@ -8,6 +8,6 @@ export class DexieServiceService extends Dexie {
 
   constructor() {
     super('NGDexie');
-    this.version(1).stores({ heroes: '++id', });
+    this.version(1).stores({ heroes: '++id, name', cities: 'hero, city'});
   }
 }
