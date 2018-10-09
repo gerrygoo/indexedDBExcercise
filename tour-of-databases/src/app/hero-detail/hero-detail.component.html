@@ -1,9 +1,0 @@
-<button (click)="goBack()">Go Back</button> <button (click)="deleteHero()">Delete Hero</button>
-<div *ngIf="hero">
-  <div>
-    <label>Id</label> <label>{{hero.id}}</label>
-  </div>
-  <div>
-    <label>Name</label> <input [(ngModel)]="hero.name" placeholder="the name"/> <button (click)="updateHero()">Update!</button>
-  </div>
-</div>
